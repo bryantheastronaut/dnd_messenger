@@ -1,11 +1,10 @@
-$border-color: #d9d9d9;
-$background-color: #fefefe;
+@import '../variables.scss';
 
 .container {
+    flex: 1 1 auto;
     display: flex;
     flex-flow: column nowrap;
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-color: $background-color;
 }
 
@@ -50,6 +49,7 @@ $background-color: #fefefe;
 }
 
 .rollZone {
+    height: 100%;
     flex: 1 1 auto;
     padding: 3em;
     display: flex;

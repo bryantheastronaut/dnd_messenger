@@ -1,0 +1,22 @@
+@import '../variables.scss';
+
+.container {
+    height: 5em;
+    border-top: 1px solid $border-color;
+    display: flex;
+}
+
+.navItem {
+    flex: 1 1 auto;
+    border-right: 1px solid $border-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:last-child {
+        border-right: none;
+    }
+    &:hover {
+        color: #888;
+        background-color: #eaeaea;
+    }
+}
