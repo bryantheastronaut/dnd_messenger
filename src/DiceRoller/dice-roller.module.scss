@@ -1,0 +1,125 @@
+$border-color: #d9d9d9;
+$background-color: #fefefe;
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100vw;
+    height: 100vh;
+    background-color: $background-color;
+}
+
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    border-bottom: 1px solid $border-color
+}
+
+
+.label {
+    font-weight: 600;
+    display: block;
+    padding-bottom: 0.25em;
+}
+
+.dropdown {
+    flex: 1 1 auto;
+    border-radius: 0.25em;
+    background-color: $background-color;
+    height: 3em;
+    border: 1px solid $border-color;
+}
+
+.input {
+    flex: 1 1 auto;
+    background-color: $background-color;
+    border-radius: 0.25em;
+    height: 2.7em;
+    border: 1px solid $border-color;
+    padding-left: 6px;
+}
+
+.topBarContainer {
+    // flex: 1 1 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 35vw;
+    max-width: 15em;
+}
+
+.rollZone {
+    flex: 1 1 auto;
+    padding: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rollButton {
+    font-size: 1em;
+    white-space: normal;
+    word-wrap: break-word;
+    width: 65vw;
+    height: 65vw;
+    max-width: 22em;
+    max-height: 22em;
+    border-radius: 50%;
+    border: 1px solid $border-color;
+    box-shadow: 2px 3px 10px $border-color;
+    &:hover {
+        background-color: #f1f1f1;
+        box-shadow: 5px 10px 20px $border-color;
+        transition: all 250ms ease-in-out;
+    }
+}
+
+.finalValue {
+    font-size: 1.25em;
+}
+
+.rolling {
+    height: 20vw;
+    width: 20vw;
+    border: 0.5em solid lightskyblue;
+    border-right: none;
+    border-left: none;
+    border-radius: 50%;
+    animation: spin 260ms linear infinite;
+}
+
+.rollResult {
+    font-size: 6em;
+}
+
+.bottomBar {
+    padding: 1em;
+    border-top: 1px solid $border-color;
+    min-height: 3em;
+}
+
+.buttonContainer {
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+.submitButton {
+    color: #fefefe;
+    font-size: 1.25em;
+    height: 3em;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+    border: 1px solid $border-color;
+    background-color: #428bca;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    
+    to {
+        transform: rotate(360deg);
+    }
+}
