@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import DiceRoller from '../DiceRoller'
 import BottomNav from '../BottomNav'
+import StartScreen from '../StartScreen'
 
 import styles from './app.module.scss'
 
@@ -9,13 +10,16 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      currentScreen: 'gameScreen',
+      currentScreen: 'optionsScreen',
       isDM: true,
     }
   }
 
   renderScreen = () => {
     const { currentScreen } = this.state
+    if (currentScreen === 'optionsScreen') {
+      return <StartScreen changeScreen={this.handleScreenChange} />
+    }
     if (currentScreen === 'gameScreen') {
       return <DiceRoller />
     }
