@@ -2,13 +2,13 @@
 
 .container {
     height: 5em;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid $light-gray;
     display: flex;
 }
 
 .navItem {
     flex: 1 1 auto;
-    border-right: 1px solid $border-color;
+    border-right: 1px solid $light-gray;
     display: flex;
     justify-content: center;
     align-items: center;
