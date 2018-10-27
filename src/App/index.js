@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 
-import DiceRoller from '../DiceRoller'
+import GameScreen from '../GameScreen'
 import BottomNav from '../BottomNav'
 import StartScreen from '../StartScreen'
+
+import { SEED_PLAYER_DATA } from '../SAMPLE_DATA'
 
 import styles from './app.module.scss'
 
@@ -10,18 +12,20 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      currentScreen: 'optionsScreen',
-      isDM: true,
+      currentScreen: 'gameScreen',
+      isDM: false,
+      playerData: SEED_PLAYER_DATA,
+      userId: '1',
     }
   }
 
   renderScreen = () => {
-    const { currentScreen } = this.state
+    const { currentScreen, playerData, userId } = this.state
     if (currentScreen === 'optionsScreen') {
       return <StartScreen changeScreen={this.handleScreenChange} />
     }
     if (currentScreen === 'gameScreen') {
-      return <DiceRoller />
+      return <GameScreen playerData={playerData} userId={userId} />
     }
   }
 

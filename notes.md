@@ -29,7 +29,7 @@ __DM:__
   - Initiate Fight
 
 
-__Game State__:
+__Game State:__
   - Game Name
   - Number of players
   - Room code
@@ -72,6 +72,8 @@ Player {
     }
   }
   isDM === false {
+    level
+    currentXP
     bio {
       background
       race
@@ -80,7 +82,32 @@ Player {
       appearance
     }
     stats {
-      // ...determine stats
+      Strength
+      Dexterity
+      Constitution
+      Intelligence
+      Wisdom
+      Charisma
+    },
+    skills {
+      Acrobatics (Dex)
+      Animal Handling (Wis)
+      Arcana (Int)
+      Athletics (Str)
+      Deception (Cha)
+      History (Int)
+      Insight (Wis)
+      Intimidation (Cha)
+      Investigation (Int)
+      Medicine (Wis)
+      Nature (Int)
+      Perception (Wis)
+      Performance (Cha)
+      Persuasion (Cha)
+      Religion (Int)
+      Sleight of Hand (Dex)
+      Stealth (Dex)
+      Survival (Wis)
     }
     inventory {
       stuff
@@ -99,6 +126,7 @@ Player {
           name
         }
       ]
+      cantrips
     }
   }
 }
