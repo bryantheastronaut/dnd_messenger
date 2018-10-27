@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { TransitionGroup } from 'react-transition-group'
+import PropTypes from 'prop-types'
 import random from 'lodash/random'
 
 import styles from './dice-roller.module.scss'
@@ -11,9 +11,14 @@ class DiceRoller extends Component {
             isRolling: false,
             hasRolled: false,
             dieSides: 20,
-            dieValue: null,
-            modifierSign: null,
-            modifierValue: '',
+            dieValue: '',
+            dieCount: '1',
+        }
+    }
+
+    static propTypes() {
+        return {
+            submitResults: PropTypes.func.isRequired,
         }
     }
 
@@ -21,23 +26,40 @@ class DiceRoller extends Component {
 
     startRoll = () => {
         this.setState({ isRolling: true, hasRolled: true }, async () => {
-            const { dieSides } = this.state
-            const dieValue = Math.ceil(random(0, dieSides))
+
+            const { dieSides, dieCount } = this.state
+            let n = Number(dieCount) || 1
+            let dieValue = ''
+            while (n > 0) {
+                const res = Math.round(random(1, dieSides))
+                dieValue += ` ${res},`
+                n--
+            }
+            dieValue = dieValue.trim().substring(0, dieValue.length - 2)
             await setTimeout(() => this.setState({ isRolling: false, dieValue }), 2500)
         })
     }
 
-    changeModifier = evt => {
-        const modifierValue = evt.target.value
-        if (modifierValue.length < 4 && (!modifierValue || /^(\+|-)?[0-9]*$/.test(modifierValue))) {
-            this.setState({ modifierValue })
+    changeNumberOfDie = evt => {
+        const dieCount = evt.target.value
+        if (dieCount.length < 3 && (!dieCount || /^(\+|-)?[0-9]*$/.test(dieCount))) {
+            this.setState({ dieCount })
         }
     }
 
-    handleSubmit = () => {/* TODO: this */}
+    handleSubmit = () => {
+        const { dieValue, dieCount, dieSides} = this.state
+        const { submitResults } = this.props
+        const values = {
+            dieValue,
+            dieCount: dieCount || 1,
+            dieSides,
+        }
+        submitResults(values)
+    }
 
     render() {
-        const { dieSides, dieValue, hasRolled, isRolling, modifierValue } = this.state
+        const { dieSides, dieValue, hasRolled, isRolling, dieCount } = this.state
         return (
             <div className={styles.container}>
                 <div className={styles.topbar}>
@@ -45,7 +67,6 @@ class DiceRoller extends Component {
                         <label className={styles.label} htmlFor={'dieSelect'}>Die</label>
                         <select id={'dieSelect'} className={styles.dropdown} onChange={this.swapDice} value={dieSides}>
                             <option value={20}>20</option>
-                            <option value={100}>Percent</option>
                             <option value={12}>12</option>
                             <option value={10}>10</option>
                             <option value={8}>8</option>
@@ -55,9 +76,9 @@ class DiceRoller extends Component {
                     </div>
 
                     <div className={styles.topBarContainer}>
-                        <label className={styles.label} htmlFor={'modifier'}>Modifier</label>
-                        <input className={styles.input} onChange={this.changeModifier} value={modifierValue} />
-                    </div> 
+                        <label className={styles.label} htmlFor={'dieCount'}># of Dice</label>
+                        <input className={styles.input} onChange={this.changeNumberOfDie} value={dieCount} />
+                    </div>
                 </div>
 
                 <div className={styles.rollZone}>
@@ -66,18 +87,16 @@ class DiceRoller extends Component {
 
                     {hasRolled
                         ? <div className={styles.rollResult}>{dieValue}</div>
-                        : <button className={styles.rollButton} onClick={this.startRoll}>Roll a {dieSides}-sided die</button>
+                        : <button className={styles.rollButton} onClick={this.startRoll}>Roll {dieCount || 'a'} {dieSides}-sided die</button>
                     }
                 </div>
                 {dieValue && <div className={styles.bottomBar}>
-                    {modifierValue &&
-                        <div className={styles.finalValue}>{dieValue} + {modifierValue} = {Number(modifierValue) + Number(dieValue)} total</div>
-                    }
+
                     <div className={styles.buttonContainer}>
                         <button className={styles.submitButton} onClick={this.handleSubmit}>Submit results</button>
                     </div>
                 </div>}
-                
+
             </div>
         )
     }

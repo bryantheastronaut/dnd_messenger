@@ -12,7 +12,7 @@
 .topbar {
     display: flex;
     justify-content: space-between;
-    padding: 0.5em;
+    padding: 1em;
     border-bottom: 1px solid $light-gray
 }
 
@@ -93,8 +93,7 @@
 }
 
 .bottomBar {
-    padding: 1em;
-    border-top: 1px solid $light-gray;
+    padding: 2em;
     min-height: 3em;
 }
 
