@@ -6,10 +6,13 @@
   flex-flow: column nowrap;
   height: 100%;
   padding: 1em;
-  background-color: $white;
+  background-color: $black;
 }
 
 .chatContainer {
+  flex: 1 1 auto;
+  background-color: $mid-gray;
+  color: $white;
   border: 1px solid $light-gray;
   border-radius: 0.25em;
   margin-bottom: 1em;
@@ -21,6 +24,7 @@
 .messageArea {
   height: 5em;
   border-radius: 0.25em;
+  padding: 0.5em;
   border: 1px solid $light-gray;
 }
 
@@ -59,9 +63,10 @@
 
 .rollButton {
   background-color: $error-red;
-  border-color: red;
+  border: $red-button-border;
 }
 
 .sendMessageButton {
   background-color: $primary-blue;
+  border: $blue-button-border;
 }

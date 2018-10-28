@@ -19,20 +19,22 @@
 }
 
 .button {
-  padding: 1em 1.5em;
+  width: 30vw;
+  max-width: 12em;
   height: 3em;
   color: $white;
-  border: 1px solid $white;
   border-radius: 0.25em;
   font-size: 1.15em;
 }
 
 .primary {
   background-color: $primary-blue;
+  border: $blue-button-border;
 }
 
 .secondary {
   background-color: $success-green;
+  border: $green-button-border;
 }
 
 .warning {
