@@ -1,0 +1,43 @@
+@import '../variables.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.rolling {
+  border: 0.5em solid lightskyblue;
+  border-right: none;
+  border-left: none;
+  border-radius: 50%;
+  animation: spin 260ms linear infinite;
+  color: $white;
+}
+
+.text {
+  position: absolute;
+  font-size: 1.75em;
+}
+
+.small {
+  height: 20vw;
+  width: 20vw;
+}
+
+.large {
+  height: 60vw;
+  width: 60vw;
+}
+
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+
+  to {
+      transform: rotate(360deg);
+  }
+}

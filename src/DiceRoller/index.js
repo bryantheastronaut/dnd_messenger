@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import random from 'lodash/random'
 
+import LoadingSpinner from '../LoadingSpinner'
+
 import styles from './dice-roller.module.scss'
 
 class DiceRoller extends Component {
@@ -83,7 +85,7 @@ class DiceRoller extends Component {
 
                 <div className={styles.rollZone}>
 
-                    {isRolling && <div className={styles.rolling}></div>}
+                    {isRolling && <LoadingSpinner size={'small'} />}
 
                     {hasRolled
                         ? <div className={styles.rollResult}>{dieValue}</div>

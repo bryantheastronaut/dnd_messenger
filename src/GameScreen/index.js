@@ -79,7 +79,7 @@ class GameScreen extends Component {
     const msgArray = message.split('\n')
     return <span>
       {msgArray.map((m, i) => m ? (
-        <span>{m}{i !== msgArray.length - 1 && <br />}</span>
+        <span key={i}>{m}{i !== msgArray.length - 1 && <span><br /><br /></span>}</span>
       ): '')}
     </span>
   }
@@ -101,6 +101,7 @@ class GameScreen extends Component {
         </div>
 
         <textarea
+          placeholder={'type your message here...'}
           className={styles.messageArea}
           value={currentMessage}
           onChange={this.changeMessage} />
