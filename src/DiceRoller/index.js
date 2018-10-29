@@ -92,12 +92,12 @@ class DiceRoller extends Component {
                         : <button className={styles.rollButton} onClick={this.startRoll}>Roll {dieCount || 'a'} {dieSides}-sided die</button>
                     }
                 </div>
-                {dieValue && <div className={styles.bottomBar}>
+                <div className={styles.bottomBar}>
 
                     <div className={styles.buttonContainer}>
-                        <button className={styles.submitButton} onClick={this.handleSubmit}>Submit results</button>
+                        {dieValue && <button className={styles.submitButton} onClick={this.handleSubmit}>Submit results</button>}
                     </div>
-                </div>}
+                </div>
 
             </div>
         )
