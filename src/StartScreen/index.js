@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import shortid from 'shortid'
 import PropTypes from 'prop-types'
+import TextField from '@material-ui/core/TextField'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+
+import Button from '../common/Button'
 
 import styles from './start-screen.module.scss'
 
@@ -37,19 +42,29 @@ class StartScreen extends Component {
       <div className={styles.container}>
         <h1>RPG Messenger</h1>
         <div className={cx(styles.buttonContainer, isJoiningGame && styles.fade)}>
-          <button className={cx(styles.button, styles.primary)} onClick={this.startNewGame}>+ New Game</button>
-          <button className={cx(styles.button, styles.secondary)} onClick={this.startJoinGame}>Join Game</button>
+          <Button theme={'primary'} onClick={this.startNewGame}>+ New Game</Button>
+          <Button theme={'success'} onClick={this.startJoinGame}>Join Game</Button>
         </div>
         {isJoiningGame && (
           <div style={{ marginTop: '5em', width: '100%' }}>
             <div className={styles.inputContainer}>
-              <label className={styles.label}>Enter your room code:</label>
-              <input value={roomCode} onChange={e => this.setState({ roomCode: e.target.value })} className={styles.input} />
+              <TextField
+                label={'Enter your room code'}
+                variant={'outlined'}
+                value={roomCode}
+                className={styles.input}
+                onChange={e => this.setState({ roomCode: e.target.value })} />
             </div>
 
             <div className={styles.buttonContainer}>
-              <button className={cx(styles.button, styles.warning)} onClick={() => this.setState({ isJoiningGame: false, roomCode: '' })}>Go back</button>
-              <button className={cx(styles.button, styles.primary)} onClick={this.joinGame}>Join Game</button>
+              <Button
+                theme={'error'}
+                onClick={() => this.setState({ isJoiningGame: false, roomCode: '' })}>
+                Go back
+              </Button>
+              <Button theme={'success'} onClick={this.joinGame}>
+                Join Game
+              </Button>
             </div>
 
           </div>
@@ -60,10 +75,12 @@ class StartScreen extends Component {
           </div>
         )}
         {yourGames.length > 0 && (
-          <ul className={styles.gamesList}>
-            <label className={styles.label}>Current games:</label>
-            {yourGames.map(game => <li className={styles.singleGame} key={game.title}>{game.title}</li>)}
-          </ul>
+          <div>
+            <h3 className={styles.yourGamesTitle}>Your games:</h3>
+            <List>
+              {yourGames.map(game => <ListItem button key={game.title}>{game.title}</ListItem>)}
+            </List>
+          </div>
         )}
       </div>
     )

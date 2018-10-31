@@ -1,22 +1,6 @@
 @import '../variables.scss';
 
 .container {
-    height: 5em;
+    height: 5.5em;
     border-top: 1px solid $light-gray;
-    display: flex;
-}
-
-.navItem {
-    flex: 1 1 auto;
-    border-right: 1px solid $light-gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:last-child {
-        border-right: none;
-    }
-    &:hover {
-        color: #888;
-        background-color: #eaeaea;
-    }
 }

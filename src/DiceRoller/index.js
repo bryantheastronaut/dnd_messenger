@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import random from 'lodash/random'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
 
 import LoadingSpinner from '../LoadingSpinner'
+import Button from '../common/Button'
 
 import styles from './dice-roller.module.scss'
 
@@ -66,20 +69,26 @@ class DiceRoller extends Component {
             <div className={styles.container}>
                 <div className={styles.topbar}>
                     <div className={styles.topBarContainer}>
-                        <label className={styles.label} htmlFor={'dieSelect'}>Die</label>
-                        <select id={'dieSelect'} className={styles.dropdown} onChange={this.swapDice} value={dieSides}>
-                            <option value={20}>20</option>
-                            <option value={12}>12</option>
-                            <option value={10}>10</option>
-                            <option value={8}>8</option>
-                            <option value={6}>6</option>
-                            <option value={4}>4</option>
-                        </select>
+                        <TextField
+                            select
+                            label={'Die'}
+                            variant={'outlined'}
+                            onChange={this.swapDice} value={dieSides}>
+                            <MenuItem value={20}>20</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                        </TextField>
                     </div>
 
                     <div className={styles.topBarContainer}>
-                        <label className={styles.label} htmlFor={'dieCount'}># of Dice</label>
-                        <input className={styles.input} onChange={this.changeNumberOfDie} value={dieCount} />
+                        <TextField
+                            number
+                            label={'# of die'}
+                            variant={'outlined'}
+                            onChange={this.changeNumberOfDie} value={dieCount} />
                     </div>
                 </div>
 
@@ -95,7 +104,7 @@ class DiceRoller extends Component {
                 <div className={styles.bottomBar}>
 
                     <div className={styles.buttonContainer}>
-                        {dieValue && <button className={styles.submitButton} onClick={this.handleSubmit}>Submit results</button>}
+                        {dieValue && <Button theme={'primary'} onClick={this.handleSubmit}>Submit results</Button>}
                     </div>
                 </div>
 

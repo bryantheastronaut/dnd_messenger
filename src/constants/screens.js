@@ -1,0 +1,7 @@
+export const SCREENS = {
+  DM_SCREEN: 0,
+  GAME_SCREEN: 1,
+  DETAILS_SCREEN: 2,
+  PlAYERS_SCREEN: 3,
+  OPTIONS_SCREEN: 4,
+}

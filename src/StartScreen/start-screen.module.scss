@@ -2,13 +2,10 @@
 
 .container {
   flex: 1 1 auto;
-  overflow: scroll;
-  background-color: $dark-gray;
   display: flex;
   flex-flow: column nowrap;
-  color: $white;
-  display: flex;
   align-items: center;
+  padding: 1em;
 }
 
 .buttonContainer {
@@ -18,52 +15,15 @@
   margin-top: 5em;
 }
 
-.button {
-  width: 30vw;
-  max-width: 12em;
-  height: 3em;
-  color: $white;
-  border-radius: 0.25em;
-  font-size: 1.15em;
-}
-
-.primary {
-  background-color: $primary-blue;
-  border: $blue-button-border;
-}
-
-.secondary {
-  background-color: $success-green;
-  border: $green-button-border;
-}
-
-.warning {
-  background-color: $error-red;
-}
 
 .inputContainer {
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-}
-
-.label {
-  font-weight: 600;
-  font-size: 1.15em;
-  display: block;
-  padding-bottom: 1em;
-  color: $white;
+  background-color: $white;
+  border-radius: 0.25em;
+  padding: 1em;
 }
 
 .input {
-  width: 60vw;
-  min-width: 20em;
-  background-color: $white;
-  border-radius: 0.25em;
-  height: 3.5em;
-  border: 1px solid $light-gray;
-  padding-left: 10px;
+  width: 100%;
 }
 
 .message {
@@ -79,20 +39,6 @@
   opacity: 0.3;
 }
 
-.gamesList {
-  list-style: none;
-  padding: 1em 2em;
-  margin: 0 3em;
-  width: 65%;
-  max-width: 30em;
-  font-size: 1.5em;
-}
-
-.singleGame {
-  margin-bottom: 2em;
-  padding: 0.5em 1em;
-  border-radius: 0.25em;
-  border: 1px solid $light-gray;
-  color: $black;
-  background-color: $white;
+.yourGamesTitle {
+  text-align: center;
 }
