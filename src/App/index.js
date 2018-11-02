@@ -9,6 +9,7 @@ import PlayerScreen from '../PlayerScreen'
 import DMScreen from '../DMScreen'
 
 import { SCREENS } from '../constants/screens'
+import firebase, { auth, provider } from '../config/firebase'
 
 import { SEED_PLAYER_DATA } from '../SAMPLE_DATA'
 
@@ -21,13 +22,37 @@ class App extends Component {
       currentScreen: SCREENS.OPTIONS_SCREEN,
       isDM: true,
       playerData: SEED_PLAYER_DATA,
-      userId: '1',
+      user: null,
     }
   }
 
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user })
+      }
+    })
+  }
+
+  login = () => {
+    auth.signInWithPopup(provider)
+      .then(res => this.setState({ user: res.user }))
+  }
+
+  logout = () => {
+    auth.signOut()
+      .then(() => this.setState({ user: null }))
+  }
+
   renderScreen = () => {
-    const { currentScreen, playerData, userId } = this.state
+    const { currentScreen, playerData, user } = this.state
+    const userId = user ? user.uid : null
     const gameData = { userId, playerData }
+    if (!user) {
+      // user must be logged in to do anything
+      return <StartScreen userId={userId} login={this.login} />
+    }
+
     if (currentScreen === SCREENS.GAME_SCREEN) {
       return <GameScreen {...gameData} />
     }
@@ -41,23 +66,25 @@ class App extends Component {
       return <DMScreen {...gameData} />
     }
     // else return the start screen
-    return <StartScreen changeScreen={this.handleScreenChange} />
+    return <StartScreen userId={userId} logout={this.logout} />
   }
 
   handleScreenChange = (_, currentScreen) => this.setState({ currentScreen })
 
   render() {
-    const { isDM, currentScreen } = this.state
+    const { isDM, currentScreen, user } = this.state
     return (
       <ThemeProvider>
         <div className={styles.container}>
           <div className={styles.mainArea}>
             {this.renderScreen()}
           </div>
-          <BottomNav
-            isDM={isDM}
-            changeScreen={this.handleScreenChange}
-            currentScreen={currentScreen} />
+          {user &&
+            <BottomNav
+              isDM={isDM}
+              changeScreen={this.handleScreenChange}
+              currentScreen={currentScreen} />
+            }
         </div>
       </ThemeProvider>
     )
