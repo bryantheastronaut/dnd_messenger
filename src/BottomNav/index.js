@@ -1,15 +1,21 @@
 import React from 'react'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 
 import styles from './bottom-nav.module.scss'
 
-const BottomNav = ({ isDM, changeScreen }) => (
-    <div className={styles.container}>
-        {isDM && <div className={styles.navItem} onClick={() => changeScreen('dmScreen')}>DM</div>}
-        <div className={styles.navItem} onClick={() => changeScreen('gameScreen')}>Game</div>
-        <div className={styles.navItem} onClick={() => changeScreen('detailsScreen')}>Details</div>
-        <div className={styles.navItem} onClick={() => changeScreen('playerScreen')}>Players</div>
-        <div className={styles.navItem} onClick={() => changeScreen('optionsScreen')}>Options</div>
-    </div>
+const BottomNav = ({ isDM, changeScreen, currentScreen }) => (
+    <BottomNavigation
+        showLabels
+        value={currentScreen}
+        className={styles.container}
+        onChange={changeScreen}>
+        {isDM && <BottomNavigationAction label={'DM'} />}
+        <BottomNavigationAction label={'Game'} />
+        <BottomNavigationAction label={'Details'} />
+        <BottomNavigationAction label={'Players'} />
+        <BottomNavigationAction label={'Options'} />
+    </BottomNavigation>
 )
 
 export default BottomNav

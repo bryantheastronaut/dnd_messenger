@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@livechat/ui-kit": "^0.2.14",
+    "@material-ui/core": "^3.3.2",
     "classnames": "^2.2.6",
     "firebase": "^5.5.5",
+    "firebaseui": "^3.4.1",
     "lodash": "^4.17.11",
     "node-sass": "^4.9.4",
     "prop-types": "^15.6.2",

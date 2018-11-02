@@ -27,8 +27,10 @@
 }
 
 .large {
-  height: 30vw;
-  width: 30vw;
+  height: 10em;
+  width: 10em;
+  max-height: 20em;
+  max-width: 20em;
   animation: loadingSpin 1.5s ease-in-out infinite;
 }
 
@@ -43,22 +45,22 @@
 
 @keyframes loadingSpin {
   0% {
-      height: 30vw;
-      width: 30vw;
+      height: 10em;
+      width: 10em;
       transform: rotate(0deg);
       border-width: 0.5em;
   }
 
   50% {
-      height: 60vw;
-      width: 60vw;
+      height: 20em;
+      width: 20em;
       transform: rotate(180deg);
       border-width: 1em;
   }
 
   100% {
-    height: 30vw;
-    width: 30vw;
+    height: 10em;
+    width: 10em;
     transform: rotate(360deg);
     border-width: 0.5em;
   }

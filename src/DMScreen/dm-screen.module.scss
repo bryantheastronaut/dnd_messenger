@@ -1,9 +1,38 @@
 @import '../variables.scss';
 
 .container {
-  background-color: $black;
-  color: $white;
   flex: 1 1 auto;
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 1em;
+  overflow: auto;
+}
+
+.input {
+  border-radius: 0.25em;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.inputContainer {
+  margin: 1.5em;
+  padding: 0.55em;
+  border-radius: 0.25em;
+  background-color: $white;
+  width: 80%;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 100%;
+  padding: 2em 1em;
+  margin-bottom: 1em;
+  justify-content: space-around;
+}
+
+.lineBreak {
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid $light-gray;
 }

@@ -8,12 +8,12 @@ import styles from './details-screen.module.scss'
 
 const DetailsScreen = ({ playerData, userId }) => (
   <div className={styles.container}>
-    <LoadingSpinner text={'loading...'} size={'large'} />
+    <LoadingSpinner size={'large'} text={'Loading...'} />
   </div>
 )
 
 DetailsScreen.propTypes = {
-  playerData: PropTypes.object.isRequired, // TODO: define this
+  playerData: PropTypes.arrayOf(PropTypes.object).isRequired, // TODO: define this
   userId: PropTypes.string.isRequired,
 }
 

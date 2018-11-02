@@ -13,7 +13,7 @@ const PlayerScreen = ({ playerData, userId }) => (
 )
 
 PlayerScreen.propTypes = {
-  playerData: PropTypes.object.isRequired, // TODO: define this
+  playerData: PropTypes.arrayOf(PropTypes.object).isRequired, // TODO: define this
   userId: PropTypes.string.isRequired,
 }
 

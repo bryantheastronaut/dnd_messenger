@@ -4,7 +4,7 @@
   flex: 1 1 auto;
   display: flex;
   flex-flow: column nowrap;
-  height: 100%;
+  // height: 100%;
   padding: 1em;
   background-color: $black;
 }
@@ -12,20 +12,23 @@
 .chatContainer {
   flex: 1 1 auto;
   background-color: $mid-gray;
-  color: $white;
+  color: $black;
   border: 1px solid $light-gray;
   border-radius: 0.25em;
   margin-bottom: 1em;
   height: 40vh;
-  overflow: scroll;
+  overflow-x: scroll;
   box-shadow: 1px 1px 2px $light-gray;
 }
 
-.messageArea {
-  height: 5em;
+.inputContainer {
+  background-color: $white;
+  padding: 0.55em;
   border-radius: 0.25em;
-  padding: 0.5em;
-  border: 1px solid $light-gray;
+}
+
+.input {
+  width: 100%;
 }
 
 .messageList {

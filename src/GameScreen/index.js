@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import shortid from 'shortid'
 import Modal from 'react-modal'
+import { MessageList, Message, MessageText } from '@livechat/ui-kit'
+import TextField from '@material-ui/core/TextField'
 
 import DiceRoller from '../DiceRoller'
+import Button from '../common/Button'
 
 import { SEED_LOG } from '../SAMPLE_DATA'
 import styles from './game-screen.module.scss'
@@ -18,11 +21,12 @@ class GameScreen extends Component {
       loading: false,
       currentMessage: '',
     }
+    this.chat = null
   }
 
   static propTypes() {
     return {
-      playerData: PropTypes.object.isRequired,
+      playerData: PropTypes.arrayOf(PropTypes.object).isRequired,
       userId: PropTypes.string,
     }
   }
@@ -39,6 +43,15 @@ class GameScreen extends Component {
       return <span className={cx(styles.name, styles.isMe)}>{player.name} (me)</span>
     }
     return <span className={cx(styles.name, styles.isPlayer)}>{player.name}</span>
+  }
+
+  renderMessage = message => {
+    const msgArray = message.split('\n')
+    return <span>
+      {msgArray.map((m, i) => m ? (
+        <span key={i}>{m}{i !== msgArray.length - 1 && <span><br /><br /></span>}</span>
+      ): '')}
+    </span>
   }
 
   sendMessage = () => {
@@ -75,46 +88,46 @@ class GameScreen extends Component {
     this.setState({ chatLog: newChatLog, isRolling: false })
   }
 
-  renderMessage = message => {
-    const msgArray = message.split('\n')
-    return <span>
-      {msgArray.map((m, i) => m ? (
-        <span key={i}>{m}{i !== msgArray.length - 1 && <span><br /><br /></span>}</span>
-      ): '')}
-    </span>
-  }
-
   render() {
     const { currentMessage, chatLog, isRolling } = this.state
     return (
       <div className={styles.container}>
 
         <div className={styles.chatContainer}>
-          <ul className={styles.messageList}>
+          <MessageList>
             {chatLog.map(entry => (
-              <li key={entry.id} className={styles.singleMessage}>
-                {this.makeChatTitle(entry.playerId)}
-                {this.renderMessage(entry.message)}
-              </li>
+              <Message key={entry.id}>
+                <MessageText>
+                  {this.makeChatTitle(entry.playerId)}
+                  {this.renderMessage(entry.message)}
+                </MessageText>
+              </Message>
             ))}
-          </ul>
+          </MessageList>
         </div>
 
-        <textarea
-          placeholder={'type your message here...'}
-          className={styles.messageArea}
-          value={currentMessage}
-          onChange={this.changeMessage} />
+        {!isRolling && <div className={styles.inputContainer}>
+          <TextField
+            multiline
+            rows={3}
+            variant={'outlined'}
+            label={'Type your message here...'}
+            value={currentMessage}
+            className={styles.input}
+            onChange={this.changeMessage} />
+        </div>}
 
         <div className={styles.buttonContainer}>
-          <button
-            onClick={() => this.setState({ isRolling: true })}
-            className={cx(styles.button, styles.rollButton)}>
+          <Button
+            theme={'error'}
+            onClick={() => this.setState({ isRolling: true })}>
             Roll
-          </button>
-          <button
-            onClick={this.sendMessage}
-            className={cx(styles.button, styles.sendMessageButton)}>Send Message</button>
+          </Button>
+          <Button
+            theme={'primary'}
+            onClick={this.sendMessage}>
+            Send Message
+          </Button>
         </div>
 
         <Modal isOpen={isRolling} style={{content: { width: '100vw', height: '100vh', top: 0, left: 0, padding: 0 } }}>

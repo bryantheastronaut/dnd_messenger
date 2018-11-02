@@ -9,6 +9,10 @@ $error-red: #FC4044;
 $primary-blue: #428bca;
 $success-green: #4BB543;
 
+$primary-button-gradient: linear-gradient($primary-blue, #123567);
+$success-button-gradient: linear-gradient($success-green, #4F714A);
+$error-button-gradient: linear-gradient($error-red, #B4424A);
+
 $red-button-border: 1px solid red;
 $blue-button-border: 1px solid #36648B;
 $green-button-border: 1px solid green;
