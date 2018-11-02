@@ -38,6 +38,18 @@ class StartScreen extends Component {
 
   render() {
     const { roomCode, isJoiningGame, message, yourGames } = this.state
+    const { userId, login, logout } = this.props
+
+    if (!userId) {
+      return (
+        <div className={styles.container}>
+          <h1>RPG Messenger</h1>
+          <div className={styles.buttonContainer}>
+            <Button theme={'primary'} onClick={login}>Login / Signup</Button>
+          </div>
+        </div>
+      )
+    }
     return (
       <div className={styles.container}>
         <h1>RPG Messenger</h1>
@@ -82,13 +94,15 @@ class StartScreen extends Component {
             </List>
           </div>
         )}
+        <Button theme={'error'} onClick={logout}>Logout</Button>
       </div>
     )
   }
 }
 
 StartScreen.propTypes = {
-  changeScreen: PropTypes.func.isRequired,
+  login: PropTypes.func,
+  logout: PropTypes.func,
 }
 
 export default StartScreen
