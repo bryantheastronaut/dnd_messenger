@@ -9,7 +9,7 @@ import PlayerScreen from '../PlayerScreen'
 import DMScreen from '../DMScreen'
 
 import { SCREENS } from '../constants/screens'
-import firebase, { auth, provider } from '../config/firebase'
+import { auth, provider, firestore } from '../config/firebase'
 
 import { SEED_PLAYER_DATA } from '../SAMPLE_DATA'
 
@@ -23,34 +23,61 @@ class App extends Component {
       isDM: true,
       playerData: SEED_PLAYER_DATA,
       user: null,
+      gameData: null,
+      myGames: [],
+
     }
   }
 
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user })
+        this.setState({ user }, this.loadGames)
       }
     })
   }
 
+  loadGames = () => {
+    const { user } = this.state
+    const userId = user.uid
+    const gamesRef = firestore.collection('games')
+    gamesRef.where('players', 'array-contains', userId).get()
+      .then(games => {
+        const myGames = []
+        games.forEach(game => myGames.push({title: game.id}))
+        this.setState({ myGames })
+      })
+  }
+
   login = () => {
     auth.signInWithPopup(provider)
-      .then(res => this.setState({ user: res.user }))
+      .then(res => this.setState({ user: res.user }, this.loadGames))
   }
 
   logout = () => {
     auth.signOut()
-      .then(() => this.setState({ user: null }))
+      .then(() => this.setState({ user: null, myGames: [], gameData: null }))
+  }
+
+  selectGame = roomCode => {
+    const gameRef = firestore.collection('games').doc(roomCode)
+    gameRef.get()
+      .then(game => {
+        if (game.exists) {
+          this.setState({ gameData: game.data() })
+        }
+      })
   }
 
   renderScreen = () => {
-    const { currentScreen, playerData, user } = this.state
+    const { currentScreen, playerData, user, myGames } = this.state
+    const { login, logout, selectGame } = this
     const userId = user ? user.uid : null
     const gameData = { userId, playerData }
+    const startScreenProps = { userId, myGames, login,logout, selectGame }
     if (!user) {
       // user must be logged in to do anything
-      return <StartScreen userId={userId} login={this.login} />
+      return <StartScreen { ...startScreenProps } />
     }
 
     if (currentScreen === SCREENS.GAME_SCREEN) {
@@ -66,20 +93,20 @@ class App extends Component {
       return <DMScreen {...gameData} />
     }
     // else return the start screen
-    return <StartScreen userId={userId} logout={this.logout} />
+    return <StartScreen { ...startScreenProps } />
   }
 
   handleScreenChange = (_, currentScreen) => this.setState({ currentScreen })
 
   render() {
-    const { isDM, currentScreen, user } = this.state
+    const { isDM, currentScreen, user, gameData } = this.state
     return (
       <ThemeProvider>
         <div className={styles.container}>
           <div className={styles.mainArea}>
             {this.renderScreen()}
           </div>
-          {user &&
+          {user && gameData && 
             <BottomNav
               isDM={isDM}
               changeScreen={this.handleScreenChange}

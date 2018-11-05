@@ -1,4 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
 import secrets from './secrets'
 
 const config = {
@@ -15,4 +18,6 @@ const app = firebase.initializeApp(config)
 export const provider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
 
-export default app
+export const firestore = app.firestore()
+const settings = { timestampsInSnapshots: true }
+firestore.settings(settings)

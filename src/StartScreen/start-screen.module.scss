@@ -6,6 +6,7 @@
   flex-flow: column nowrap;
   align-items: center;
   padding: 1em;
+  overflow: auto;
 }
 
 .buttonContainer {
@@ -27,8 +28,10 @@
 }
 
 .message {
-  font-size: 1.5em;
-  padding: 1em;
+  position: absolute;
+  top: 5em;
+  font-size: 0.75em;
+  padding: 0.5em;
   background-color: $white;
   border-radius: 0.25em;
   color: $error-red;

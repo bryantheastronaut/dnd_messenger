@@ -8,6 +8,8 @@ import ListItem from '@material-ui/core/ListItem'
 
 import Button from '../common/Button'
 
+import { firestore } from '../config/firebase'
+
 import styles from './start-screen.module.scss'
 
 class StartScreen extends Component {
@@ -17,7 +19,6 @@ class StartScreen extends Component {
       roomCode: '',
       isJoiningGame: false,
       message: null,
-      yourGames: [{ title: 'Hero\'s Quest' }],
     }
   }
 
@@ -25,20 +26,38 @@ class StartScreen extends Component {
     // this will hit the backend and create a new entry based on a
     // shortId roomCode
     const roomCode = shortid.generate()
+    const gameRef = firestore.collection('games').doc(roomCode)
+    gameRef.set({ players: [ this.props.userId ]})
     this.setState({ message: `Room created. Invite others using the room code: ${roomCode}`})
   }
 
   startJoinGame = () => this.setState({ isJoiningGame: true })
 
   joinGame = () => {
-    // This is gonna have to take the room code and search the db.
-    // If it doesnt exist, set an error
-    // if it does, go to player screen
+    const { roomCode } = this.state
+    const { userId } = this.props
+    const gameRef = firestore.collection('games').doc(roomCode)
+    gameRef.get()
+      .then(game => {
+        if (game.exists) {
+          const { players } = game.data()
+          if (players.includes(userId)) {
+            this.setState({
+              message: 'You are already in this game. Select it from the list below',
+            })
+          }
+
+        } else {
+          this.setState({
+            message: 'Sorry, that game was not found. Be sure you entered the code correctly',
+          })
+        }
+      })
   }
 
   render() {
-    const { roomCode, isJoiningGame, message, yourGames } = this.state
-    const { userId, login, logout } = this.props
+    const { roomCode, isJoiningGame, message } = this.state
+    const { userId, login, logout, myGames, selectGame } = this.props
 
     if (!userId) {
       return (
@@ -53,6 +72,11 @@ class StartScreen extends Component {
     return (
       <div className={styles.container}>
         <h1>RPG Messenger</h1>
+        {message && (
+          <div className={styles.message}>
+            {message}
+          </div>
+        )}
         <div className={cx(styles.buttonContainer, isJoiningGame && styles.fade)}>
           <Button theme={'primary'} onClick={this.startNewGame}>+ New Game</Button>
           <Button theme={'success'} onClick={this.startJoinGame}>Join Game</Button>
@@ -81,16 +105,11 @@ class StartScreen extends Component {
 
           </div>
         )}
-        {message && (
-          <div className={styles.message}>
-            {message}
-          </div>
-        )}
-        {yourGames.length > 0 && (
+        {myGames.length > 0 && (
           <div>
             <h3 className={styles.yourGamesTitle}>Your games:</h3>
             <List>
-              {yourGames.map(game => <ListItem button key={game.title}>{game.title}</ListItem>)}
+              {myGames.map(game => <ListItem button onClick={() => selectGame(game.title)} key={game.title}>{game.title}</ListItem>)}
             </List>
           </div>
         )}
