@@ -3,8 +3,8 @@
 .button {
   cursor: pointer;
   border: none;
-  width: 30vw;
-  max-width: 12em;
+  min-width: 30vw;
+  // max-width: 12em;
   height: 3em;
   color: $white;
   border-radius: 0.25em;

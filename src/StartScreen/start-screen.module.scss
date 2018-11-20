@@ -13,7 +13,7 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-top: 5em;
+  margin-top: 3em;
 }
 
 
@@ -28,14 +28,14 @@
 }
 
 .message {
-  position: absolute;
-  top: 5em;
-  font-size: 0.75em;
+  // position: absolute;
+  top: 7.5em;
+  font-size: 0.85em;
   padding: 0.5em;
+  max-width: 80vw;
   background-color: $white;
   border-radius: 0.25em;
   color: $error-red;
-  margin: 2em;
 }
 
 .fade {

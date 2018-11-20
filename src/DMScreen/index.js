@@ -1,89 +1,74 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 
 import Button from '../common/Button'
+import AwardPlayer from './AwardPlayer'
 
 // import LoadingSpinner from '../LoadingSpinner'
 
 import styles from './dm-screen.module.scss'
 
-class DMScreen extends Component {
-  constructor() {
-    super()
-    this.state = {
-      campaignTitle: '',
-      currentLocation: '',
-      gameNotes: '',
-      proximityCharacters: ''
-    }
-  }
 
-  onChangeText = ({ target }) => {
-    const newState = { ...this.state }
-    const { name, value } = target
-    newState[name] = value
-    this.setState(newState)
-  }
+const makeInput = inputProps => (
+  <div className={styles.inputContainer}>
+    <TextField
+      variant={'outlined'}
+      className={styles.input}
+      {...inputProps} />
+  </div>
+)
 
-  save() {
-    // save it.
-  }
+const reload = () => { /** refetch data */}
+const save = () => { /** call firebase to save game data */}
 
-  reload() {
-    // refetch data and reset
-  }
+const DMScreen = props => {
+  const [title, changeTitle] = useState('')
+  const [currentLocation, changeCurrentLocation] = useState('')
+  const [gameNotes, changeGameNotes] = useState('')
+  const [modalIsOpen, toggleModal] = useState(false)
+  return (
+    <div className={styles.container}>
+      {!modalIsOpen &&
+        <>
+          {makeInput({
+            value: title,
+            label: 'Campaign Title',
+            onChange: e => changeTitle(e.target.value),
+          })}
+          {makeInput({
+            value: currentLocation,
+            label: 'Current Location',
+            onChange: e => changeCurrentLocation(e.target.value),
+          })}
+          {makeInput({
+            value: gameNotes,
+            rows: 5,
+            multiline: true,
+            label: 'Game notes',
+            onChange: e=> changeGameNotes(e.target.value),
+          })}
 
-  render() {
-    return (
-      <div className={styles.container}>
-        <div className={styles.inputContainer}>
-          <TextField
-            variant={'outlined'}
-            className={styles.input}
-            label={'Campaign Title:'}
-            value={this.state.campaignTitle}
-            onChange={e => this.setState({ campaignTitle: e.target.value })} />
-          </div>
-          <div className={styles.inputContainer}>
-          <TextField
-            variant={'outlined'}
-            className={styles.input}
-            label={'Current Location:'}
-            value={this.state.currentLocation} />
-          </div>
-          <div className={styles.inputContainer}>
-          <TextField
-            multiline
-            rows={5}
-            variant={'outlined'}
-            className={styles.input}
-            label={'Game notes:'}
-            onChange={e => this.setState({ gameNotes: e.target.value })} />
-          </div>
-          <div className={styles.inputContainer}>
-          <TextField
-            multiline
-            rows={5}
-            variant={'outlined'}
-            className={styles.input}
-            label={'Proximity Characters:'}
-            onChange={e => this.setState({ proximityCharacters: e.target.value })} />
-          </div>
           <div className={styles.buttonContainer}>
-            <Button theme={'error'} onClick={this.reload}>Reset</Button>
-            <Button theme={'primary'} onClick={this.save}>Save</Button>
+            <Button theme={'error'} onClick={reload}>Reset</Button>
+            <Button theme={'primary'} onClick={save}>Save</Button>
           </div>
           <div className={styles.lineBreak}>Actions:</div>
           <div className={styles.buttonContainer}>
-            <Button theme={'error'} onClick={this.startBattle}>Start battle</Button>
-            <Button theme={'primary'} onClick={this.awardXP}>Award XP</Button>
-            <Button theme={'success'} onClick={this.giftItem}>Gift Item</Button>
+            <Button theme={'primary'} onClick={() => toggleModal(true)}>Award Player</Button>
           </div>
-      </div>
-    )
-  }
-
+        </>
+      }
+      <Modal
+        isOpen={modalIsOpen}
+        style={{
+          content: { width: '100vw', height: '100vh', top: 0, left: 0, padding: 0 }
+        }}>
+        <AwardPlayer closeModal={() => toggleModal(false)} />
+      </Modal>
+    </div>
+  )
 }
 
 DMScreen.propTypes = {

@@ -106,7 +106,7 @@ class App extends Component {
           <div className={styles.mainArea}>
             {this.renderScreen()}
           </div>
-          {user && gameData && 
+          {user && gameData &&
             <BottomNav
               isDM={isDM}
               changeScreen={this.handleScreenChange}

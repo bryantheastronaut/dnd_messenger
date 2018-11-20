@@ -1,14 +1,22 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 
 import styles from './bottom-nav.module.scss'
 
+const style = {
+    root: {
+        backgroundColor: '#333',
+        color: '#a7a7a7',
+    }
+}
+
 const BottomNav = ({ isDM, changeScreen, currentScreen }) => (
     <BottomNavigation
         showLabels
         value={currentScreen}
-        className={styles.container}
+        classes={style}
         onChange={changeScreen}>
         {isDM && <BottomNavigationAction label={'DM'} />}
         <BottomNavigationAction label={'Game'} />
@@ -18,4 +26,10 @@ const BottomNav = ({ isDM, changeScreen, currentScreen }) => (
     </BottomNavigation>
 )
 
-export default BottomNav
+const StyledBottomNav = withStyles({
+    root: {
+        backgroundColor: 'red'
+    }
+})(BottomNav)
+
+export default StyledBottomNav

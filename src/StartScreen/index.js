@@ -28,7 +28,10 @@ class StartScreen extends Component {
     const roomCode = shortid.generate()
     const gameRef = firestore.collection('games').doc(roomCode)
     gameRef.set({ players: [ this.props.userId ]})
-    this.setState({ message: `Room created. Invite others using the room code: ${roomCode}`})
+    this.setState({
+      roomCode,
+      message: `Room created. Invite others using the room code: ${roomCode}. You are the DM. Set game data in the game tab or promote another player to DM in the DM tab`
+    }, () => this.props.selectGame(roomCode))
   }
 
   startJoinGame = () => this.setState({ isJoiningGame: true })
@@ -36,6 +39,7 @@ class StartScreen extends Component {
   joinGame = () => {
     const { roomCode } = this.state
     const { userId } = this.props
+    if (!roomCode) return
     const gameRef = firestore.collection('games').doc(roomCode)
     gameRef.get()
       .then(game => {
@@ -113,7 +117,9 @@ class StartScreen extends Component {
             </List>
           </div>
         )}
-        <Button theme={'error'} onClick={logout}>Logout</Button>
+        <div className={styles.buttonContainer}>
+          <Button theme={'error'} onClick={logout}>Logout</Button>
+        </div>
       </div>
     )
   }

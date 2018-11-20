@@ -1,6 +1,8 @@
 @import '../variables.scss';
 
-.container {
+.root {
     height: 5.5em;
     border-top: 1px solid $light-gray;
+    background-color: $black;
+    color: $white;
 }
