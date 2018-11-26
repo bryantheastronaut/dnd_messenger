@@ -24,6 +24,7 @@ class App extends Component {
       playerData: SEED_PLAYER_DATA,
       user: null,
       gameData: null,
+      gameId: '',
       myGames: [],
 
     }
@@ -64,16 +65,16 @@ class App extends Component {
     gameRef.get()
       .then(game => {
         if (game.exists) {
-          this.setState({ gameData: game.data() })
+          this.setState({ gameData: game.data(), gameId: game.id })
         }
       })
   }
 
   renderScreen = () => {
-    const { currentScreen, playerData, user, myGames } = this.state
+    const { currentScreen, playerData, user, myGames, gameId } = this.state
     const { login, logout, selectGame } = this
     const userId = user ? user.uid : null
-    const gameData = { userId, playerData }
+    const gameData = { userId, playerData, gameId }
     const startScreenProps = { userId, myGames, login,logout, selectGame }
     if (!user) {
       // user must be logged in to do anything

@@ -5,18 +5,10 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 
 import styles from './bottom-nav.module.scss'
 
-const style = {
-    root: {
-        backgroundColor: '#333',
-        color: '#a7a7a7',
-    }
-}
-
 const BottomNav = ({ isDM, changeScreen, currentScreen }) => (
     <BottomNavigation
         showLabels
         value={currentScreen}
-        classes={style}
         onChange={changeScreen}>
         {isDM && <BottomNavigationAction label={'DM'} />}
         <BottomNavigationAction label={'Game'} />
